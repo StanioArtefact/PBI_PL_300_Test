@@ -1,4 +1,4 @@
 # Ignorer les environnements virtuels
-*/pbi_test/
-*.pyc
+/pbi_test/
+
 __pycache__/
