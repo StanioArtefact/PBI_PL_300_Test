@@ -6,6 +6,9 @@ from data_loader import load_and_shuffle_data
 st.markdown(
     """
     <style>
+        body {
+            background-color: #FFEB3B !important;  /* Light yellow background with !important */
+        }
         .header-image {
             width: 200px;
             display: block;
@@ -79,8 +82,13 @@ else:
     answered_data = st.session_state["answered_questions"].get(st.session_state["current_index"], {})
     answered = answered_data.get("answer")
     
+    # Sélectionner les choix de réponses (2 ou 4 selon la question)
+    if pd.notna(question["Choix 3"]) and pd.notna(question["Choix 4"]):
+        choices = [question["Choix 1"], question["Choix 2"], question["Choix 3"], question["Choix 4"]]
+    else:
+        choices = [question["Choix 1"], question["Choix 2"]]
+
     # Afficher les choix de réponse avec radio désactivé si déjà répondu
-    choices = [question["Choix 1"], question["Choix 2"], question["Choix 3"], question["Choix 4"]]
     selected_answer = st.radio(
         "Select an answer:", choices, index=choices.index(answered) if answered else None, disabled=bool(answered)
     )
@@ -124,7 +132,7 @@ else:
                 st.rerun()
 
     with col2:
-        if st.session_state["current_index"] < min(len(df), 40) - 1:
+        if st.session_state["current_index"] < min(len(df), 50) - 1:
             if st.button("Next question ➡️"):
                 st.session_state["current_index"] += 1
                 st.rerun()
