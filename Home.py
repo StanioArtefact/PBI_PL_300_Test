@@ -31,7 +31,8 @@ st.image(
 
 # Charger et mélanger les données au démarrage
 if "df" not in st.session_state or "restart_quiz" in st.session_state:
-    st.session_state["df"] = load_and_shuffle_data()
+    full_df = load_and_shuffle_data()
+    st.session_state["df"] = full_df.sample(n=50).reset_index(drop=True)
     st.session_state["score"] = 0
     st.session_state["current_index"] = 0
     st.session_state["answered_questions"] = {}  # Stocke les réponses et explications
