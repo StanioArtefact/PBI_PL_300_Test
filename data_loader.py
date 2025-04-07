@@ -9,14 +9,13 @@ def load_and_shuffle_data(file_path="data/Questions_Test.csv"):
 
 def format_for_markdown(text):
     """
-    Convertit un texte avec des '\\n' ou '\n' en texte Markdown-friendly avec des sauts de ligne visibles.
-    Utilisable avec st.markdown().
+    Corrige les retours à la ligne littéraux dans un texte venant d'un CSV pour les rendre Markdown-friendly.
     """
     if not isinstance(text, str):
         return text
 
-    # Normaliser les deux cas : vrais \n ou littéraux \\n
-    text = text.replace("\\n", "\n")
+    # Cas où le texte contient '\\n' au lieu de vrais retours
+    text = text.replace("\\n", "\n")  # interpréter le \n texte
 
-    # Convertir tous les sauts de ligne en version Markdown-friendly
+    # Ensuite, convertir tous les vrais retours à la ligne en markdown-friendly
     return text.replace("\n", "  \n")
