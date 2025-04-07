@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from data_loader import load_and_shuffle_data
-from format_utils import format_paragraph
+from data_loader import format_for_markdown
 
 # Appliquer un style CSS global
 st.markdown(
@@ -33,9 +33,6 @@ st.image(
 # Charger et mélanger les données au démarrage
 if "df" not in st.session_state or "restart_quiz" in st.session_state:
     full_df = load_and_shuffle_data()
-    # Appliquer le formatage sur les colonnes "Question" et "Explication"
-    full_df["Question"] = full_df["Question"].apply(format_paragraph)
-    full_df["Explication"] = full_df["Explication"].apply(format_paragraph)
     # Mélanger et stocker dans la session
     st.session_state["df"] = full_df.sample(n=50).reset_index(drop=True)
     st.session_state["score"] = 0
@@ -78,7 +75,9 @@ else:
     question = df.iloc[st.session_state["current_index"]]
     
     st.subheader(f"Question {st.session_state['current_index'] + 1}:")
-    st.write(question["Question"])
+
+    # Gérer les sauts de ligne Markdown-friendly dans la Question
+    st.markdown(format_for_markdown(question["Question"]))
 
     # Afficher une image si disponible
     if "Image" in df.columns and pd.notna(question["Image"]):
@@ -105,7 +104,7 @@ else:
         st.session_state["answered_questions"][st.session_state["current_index"]] = {
             "answer": selected_answer,
             "correct": is_correct,
-            "explanation": question["Explication"]
+            "explanation": format_for_markdown(question['Explication'])
         }
         if is_correct:
             st.success("✅ Correct answer!")
@@ -113,7 +112,11 @@ else:
         else:
             st.error(f"❌ Incorrect answer! The correct answer was: **{correct_answer}**")
 
-        st.info(f"ℹ️ **Explanation:** {question['Explication']}")
+        st.markdown(f"""
+        <div style="background-color:#e1f5fe;padding:10px;border-radius:6px">
+        <b>ℹ️ Explanation:</b><br>{format_for_markdown(question['Explication'])}
+        </div>
+        """, unsafe_allow_html=True)
         st.rerun()
 
     # Affichage de l'explication si déjà répondu
@@ -123,7 +126,11 @@ else:
         else:
             st.error(f"❌ Incorrect answer! The correct answer was: **{question['Solution']}**")
 
-        st.info(f"ℹ️ **Explanation:** {answered_data['explanation']}")
+        st.markdown(f"""
+        <div style="background-color:#e1f5fe;padding:10px;border-radius:6px">
+        <b>ℹ️ Explanation:</b><br>{format_for_markdown(question['Explication'])}
+        </div>
+        """, unsafe_allow_html=True)
 
     # Affichage du score
     st.write(f"**Current Score:** {st.session_state['score']}")
