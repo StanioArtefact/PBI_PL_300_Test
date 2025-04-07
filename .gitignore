@@ -1,4 +1,22 @@
-# Ignorer les environnements virtuels
-/pbi_test/
+# Environnements virtuels (nommé pbi_test ou autre)
+pbi_test/
+.venv/
+venv/
+.env/
+env/
 
+# Caches Python
 __pycache__/
+*.py[cod]
+*.pyo
+
+# Logs
+*.log
+
+# IDE et notebooks
+.vscode/
+.idea/
+.ipynb_checkpoints/
+
+# Données locales
+*.csv
