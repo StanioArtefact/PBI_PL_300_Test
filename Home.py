@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from data_loader import load_and_shuffle_data
+from format_utils import format_paragraph
 
 # Appliquer un style CSS global
 st.markdown(
@@ -32,6 +33,10 @@ st.image(
 # Charger et mélanger les données au démarrage
 if "df" not in st.session_state or "restart_quiz" in st.session_state:
     full_df = load_and_shuffle_data()
+    # Appliquer le formatage sur les colonnes "Question" et "Explication"
+    full_df["Question"] = full_df["Question"].apply(format_paragraph)
+    full_df["Explication"] = full_df["Explication"].apply(format_paragraph)
+    # Mélanger et stocker dans la session
     st.session_state["df"] = full_df.sample(n=50).reset_index(drop=True)
     st.session_state["score"] = 0
     st.session_state["current_index"] = 0
