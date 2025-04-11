@@ -72,7 +72,7 @@ Which of the following options is required to configure Incremental Refresh in P
 • Incremental refresh is designed for Import mode, not DirectQuery, which retrieves data in real-time.\n 
 • Query folding must be enabled for incremental refresh to efficiently filter and partition data at the source.\n 
 • Composite models combine Import and DirectQuery, but they are not required for incremental refresh to function.",
-"Sales, Customer, Product, and Product Type are in DirectQuery mode.\n 
+"• Sales, Customer, Product, and Product Type are in DirectQuery mode.\n 
 • A Country table is built using country names from the Customer table.\n 
 • We want to add a Product Manager table from an Excel Workbook to the model.\n 
 • There is no on-premises Data Gateway installed.\n 
@@ -157,7 +157,7 @@ In this case, using PARALLELPERIOD is the best choice since it allows comparison
 • The report is a single page that contains 15 AppSource visuals and 10 default visuals.\n 
 Users say that the report is slow to load the visuals when they access and interact with the report.\n 
 You need to recommend a solution to improve the performance of the report.\n 
-What should you recommend?",Replace the default visuals with AppSource visuals,Remove unused columns from tables in the data model,"Change the imported dataset to DirectQuery",Increase the number of times that the dataset is refreshed,Remove unused columns from tables in the data model.,"Removing unused columns reduces the data model size and memory consumption, which directly improves report performance — especially in shared capacity.\n 
+What should you recommend?",Replace the default visuals with AppSource visuals,Remove unused columns from tables in the data model,"Change the imported dataset to DirectQuery",Increase the number of times that the dataset is refreshed,Remove unused columns from tables in the data model,"Removing unused columns reduces the data model size and memory consumption, which directly improves report performance — especially in shared capacity.\n 
 A leaner model leads to faster visual rendering and better overall responsiveness.",
 "• Sales, Customer, Product, and Product Type are in DirectQuery mode.\n 
 • A Country table is built using country names from the Customer table.\n 
@@ -803,3 +803,38 @@ Which access should you give to the HR Dataset?",Assign User1 the Contributor ro
 • Contributor role for WorkspaceA  would allow User1 to modify the dataset, including refreshing or deleting it — which violates the “prevent modification” requirement.\n 
 • Read permissions for the HR dataset would allow viewing reports using the dataset, but not building new reports from it — so it doesn’t meet the need to create reports.\n 
 • Share permissions for the HR dataset would allow the user to share the dataset or reports with others — which violates the requirement to prevent user management.",
+"We need a chart to display the proportion of late orders for a company shipping products internationally.\n 
+Which type of visual should we choose?",Bar Chart,Pie Chart,Line Chart,Area Chart,Pie Chart,"• To display the proportion of late orders in Power BI, a Pie Chart is the most suitable option.\n
+It visually highlights the share of late orders compared to on-time orders, making it ideal for showing a simple percentage breakdown.\n
+• If you want to compare late orders across categories (e.g., by customer or region), use a Bar Chart.\n
+• For trends over time (e.g., late orders per month), Line or Area Charts are more appropriate.",
+"You need to visualize the contribution of each product to the company’s total sales over time.\n
+Which type of chart should you use to best represent the relative proportion of each product in the total sales?",100% Stacked Bar Chart,Area Chart,Line Chart,Pie Chart,100% Stacked Bar Chart,"To show how each product contributes to total sales over time in relative terms, the 100% Stacked Bar Chart is the most appropriate.\n
+It displays proportions clearly at each point in time, making it easy to compare product contributions.",
+"You need to visualize the sales of each region over time for a company.\n
+Which type of chart should you use to best compare the sales of each region?",100% Stacked Bar Chart,Area Chart,Line Chart,Pie Chart,Line Chart,"To compare the actual sales volumes of each region over time, a Line Chart is the most appropriate.\n
+It allows for a clear comparison of trends across regions using a common scale.",
+"You have a Power BI Desktop PBIX file that contains a single page report with multiple visuals.\n
+You plan to use Performance Analyzer to evaluate the performance of the visuals.\n
+You need to eliminate the impact of visual caching during the evaluation.\n
+What should you do first?",Add a blank page to the PBIX file.,Connect DAX Studio to the data model.,Reopen the PBIX file.,Start recording.,Add a blank page to the PBIX file.,"To eliminate the impact of visual caching during a performance evaluation when using Performance Analyzer to evaluate the visuals, you must first add a blank page to the report, select that page, and then reopen the PBIX file.\n
+Connecting DAX Studio to the data model is the first step to clear the data engine cache. Recording should not be started until both the visual cache and the data engine cache are cleared.",
+"You’re designing a Power BI measure to calculate the rank of each product by total sales.\n 
+You want the rank to be calculated dynamically within a visual and avoid duplicated ranks when values are tied.\n
+Complete the missing third argument in the following RANKX() expression:\n
+Product Rank =\n
+RANKX(\n
+    ALL(Products[ProductName]),\n
+    CALCULATE(SUM(Sales[SalesAmount])),\n
+    ___________,\n
+    DESC\n
+)\n
+Which of the following should you use?",Products[ProductName],SELECTEDVALUE(Products[ProductName]),RANK.EQ(Products[ProductName]),MAX(Products[ProductName]),SELECTEDVALUE(Products[ProductName]),"• B is correct because SELECTEDVALUE() returns the current row’s product name in the visual context, which is needed to compare and compute the correct rank for each individual item.\n 
+• A would cause the expression to return the same value for every row and rank incorrectly.\n 
+• C is not a valid DAX function.\n 
+• D is unnecessary and would only work in very specific (and incorrect) contexts.\n ",
+"You’re creating a ranking measure in Power BI using the RANKX() function.\n
+You want to assign a unique, consecutive rank to each item in the list, so that the ranks are like 1, 2, 3, 4 — even when values are tied.\n
+Which value should you use for the ties argument in the RANKX() function?",Dense,Skip,Distinct,NoTies,Dense,"• Dense assigns the same rank to tied values, but the next rank continues sequentially. This ensures there are no skipped ranks. If you want absolutely unique ranks, you’d use RANKX() with Dense plus a tie-breaking logic (e.g., add a secondary sort).\n
+• Skip is the default behavior. It gives the same rank to ties, and skips the next rank(s).\n
+• Distinct and NoTies are not valid DAX keywords in RANKX.",
