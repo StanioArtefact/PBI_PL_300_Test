@@ -113,7 +113,7 @@ else:
             st.error(f"❌ Incorrect answer! The correct answer was: **{correct_answer}**")
 
         st.markdown(f"""
-        <div style="background-color:#e1f5fe;padding:10px;border-radius:6px">
+        <div style="background-color:#e1f5fe;padding:10px;border-radius:6px;color:black">
         <b>ℹ️ Explanation:</b><br>{format_for_markdown(question['Explication'])}
         </div>
         """, unsafe_allow_html=True)
@@ -127,10 +127,11 @@ else:
             st.error(f"❌ Incorrect answer! The correct answer was: **{question['Solution']}**")
 
         st.markdown(f"""
-        <div style="background-color:#e1f5fe;padding:10px;border-radius:6px">
+        <div style="background-color:#e1f5fe;padding:10px;border-radius:6px;color:black">
         <b>ℹ️ Explanation:</b><br>{format_for_markdown(question['Explication'])}
         </div>
         """, unsafe_allow_html=True)
+
 
     # Affichage du score
     st.write(f"**Current Score:** {st.session_state['score']}")
